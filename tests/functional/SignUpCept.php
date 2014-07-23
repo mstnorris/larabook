@@ -13,7 +13,7 @@ $I->fillField('Email:', 'johndoe@example.com');
 $I->fillField('Password:', 'password');
 $I->fillField('Password Confirmation:', 'password');
 
-$I->click('Sign Up!');
+$I->click('Sign Up');
 $I->seeCurrentUrlEquals('');
 $I->see('Welcome to Larabook');
 $I->seeRecord('users', [
