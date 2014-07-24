@@ -10,24 +10,23 @@ class FunctionalHelper extends \Codeception\Module
 {
     public function signIn()
     {
-
+        $username = 'FooBar';
         $email = 'foo@example.com';
         $password = 'bar';
-
-        $this->haveAnAccount(compact('email', 'password'));
-
+        $this->haveAnAccount(compact('username', 'email', 'password'));
         $I = $this->getModule('Laravel4');
         $I->amOnPage('/login');
         $I->fillField('Email:', $email);
         $I->fillField('Password:', $password);
         $I->click('Sign in');
-
     }
 
-    public function postAStatus($overrides = [])
+    public function postAStatus($body)
     {
-        $this->have('Larabook\Statuses\Status', $overrides);
-        TestDummy::create('Larabook\Users\User', $overrides);
+        $I = $this->getModule('Laravel4');
+        $I->fillField('body', $body);
+        $I->click('Post Status');
+
     }
 
     public function have($model, $overrides = [])

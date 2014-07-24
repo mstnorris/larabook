@@ -7,13 +7,14 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 use Eloquent, Hash;
 use Larabook\Registration\Events\UserRegistered;
 use Laracasts\Commander\Events\EventGenerator;
+use Laracasts\Presenter\PresentableTrait;
 
 /**
  * Class User
  */
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
-	use UserTrait, RemindableTrait, EventGenerator;
+	use UserTrait, RemindableTrait, EventGenerator, PresentableTrait;
 
 	/**
 	 * The database table used by the model.
@@ -21,6 +22,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var string
 	 */
 	protected $table = 'users';
+
+    /**
+     * Path to the presenter for a user
+     *
+     * @var string
+     */
+    protected $presenter = 'Larabook\Users\UserPresenter';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -58,10 +66,30 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
         $user->raise(new UserRegistered($user));
 
-
-
-
         return $user;
     }
 
+
+    /**
+     * A user has many statuses
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function statuses()
+    {
+        return $this->hasMany('Larabook\Statuses\Status');
+    }
+
+
+    /**
+     * Determine if the given user is the same as
+     * the current one
+     *
+     * @param User $user
+     * @return mixed
+     */
+    public function is(User $user)
+    {
+        return $this->username == $user->username;
+    }
 }

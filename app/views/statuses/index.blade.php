@@ -2,12 +2,20 @@
 
 @section('content')
 
-<h1>Post a Status</h1>
+<div class="row">
 
-{{ Form::open() }}
+    <div class="col-md-6 col-md-offset-3">
 
+        @include('statuses.partials.publish-status-form')
 
+        @foreach($statuses as $status)
 
-{{ Form::close() }}
+            @include('statuses.partials.status')
+
+        @endforeach
+
+    </div>
+
+</div>
 
 @stop
