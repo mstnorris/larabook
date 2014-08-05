@@ -37,4 +37,39 @@ class UserRepository {
             $query->latest();
         }])->whereUsername($username)->first();
     }
+
+    /**
+     * Find a user by their ID
+     *
+     * @param $id
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|static
+     */
+    public function findById($id)
+    {
+        return User::findOrFail($id);
+    }
+
+    /**
+     * Follow a Larabook member
+     *
+     * @param $userIdToFollow
+     * @param User $user
+     * @return mixed
+     */
+    public function follow($userIdToFollow, User $user)
+    {
+        return $user->followedUsers()->attach($userIdToFollow);
+    }
+
+    /**
+     * Unfollow a Larabook member
+     *
+     * @param $userIdToUnfollow
+     * @param User $user
+     * @return int
+     */
+    public function unfollow($userIdToUnfollow, User $user)
+    {
+        return $user->followedUsers()->detach($userIdToUnfollow);
+    }
 } 

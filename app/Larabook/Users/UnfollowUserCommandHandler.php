@@ -2,29 +2,26 @@
 
 use Laracasts\Commander\CommandHandler;
 
-class FollowUserCommandHandler implements CommandHandler {
+class UnfollowUserCommandHandler implements CommandHandler {
 
     protected $userRepo;
 
-    function __construct(UserRepository $userRepo)
+    function __construct($userRepo)
     {
         $this->userRepo = $userRepo;
     }
 
     /**
-     * Handle the command
+     * Handle the command.
      *
-     * @param $command
-     * @return mixed
+     * @param object $command
+     * @return void
      */
     public function handle($command)
     {
         $user = $this->userRepo->findById($command->userId);
 
-        $this->userRepo->follow($command->userIdToFollow, $user);
-
-        return $user;
+        $this->userRepo->unfollow($command->userIdToUnfollow, $user);
     }
 
-
-} 
+}

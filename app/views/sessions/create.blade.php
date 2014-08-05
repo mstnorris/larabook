@@ -2,26 +2,34 @@
 
 @section('content')
 
-<h1>Sign in</h1>
+    <div class="row">
 
-{{ Form::open(['route' => 'login_path']) }}
+        <div class="col-md-6 col-xs-12">
 
-    <!-- Email Form Input -->
-    <div class="form-group">
-        {{ Form::label('email', 'Email:') }}
-        {{ Form::text('email', null, ['class' => 'form-control', 'required' => 'required']) }}
+            <h1>Sign in</h1>
+
+            {{ Form::open(['route' => 'login_path']) }}
+
+                <!-- Email Form Input -->
+                <div class="form-group">
+                    {{ Form::label('email', 'Email:') }}
+                    {{ Form::text('email', null, ['class' => 'form-control', 'required' => 'required']) }}
+                </div>
+
+                <!-- Password Form Input -->
+                <div class="form-group">
+                    {{ Form::label('password', 'Password:') }}
+                    {{ Form::password('password', ['class' => 'form-control', 'required' => 'required']) }}
+                </div>
+
+                <div class="form-group">
+                    {{ Form::submit('Sign in', ['class' => 'btn btn-primary']) }}
+                </div>
+
+            {{ Form::close() }}
+
+        </div>
+
     </div>
-
-    <!-- Password Form Input -->
-    <div class="form-group">
-        {{ Form::label('password', 'Password:') }}
-        {{ Form::password('password', ['class' => 'form-control', 'required' => 'required']) }}
-    </div>
-
-    <div class="form-group">
-        {{ Form::submit('Sign in', ['class' => 'btn btn-primary']) }}
-    </div>
-
-{{ Form::close() }}
 
 @stop

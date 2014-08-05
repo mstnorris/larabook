@@ -1,7 +1,8 @@
-<?php
-namespace Larabook\Statuses;
+<?php namespace Larabook\Statuses;
+
 
 class PublishStatusCommand {
+
     /**
      * @var $body
      */
@@ -13,11 +14,14 @@ class PublishStatusCommand {
     public $userId;
 
     /**
-     * Construct
+     * @param $body
+     * @param $userId
      */
-    public function __construct($body, $userId)
+    function __construct($body, $userId)
     {
         $this->body   = $body;
         $this->userId = $userId;
     }
-}
+
+
+} 

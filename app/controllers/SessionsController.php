@@ -37,15 +37,17 @@ class SessionsController extends \BaseController {
     {
         $formData = Input::only('email', 'password');
 
-
-
         $this->signInForm->validate($formData);
 
-        if (Auth::attempt($formData)) {
-            Flash::message('Welcome back');
+        if ( ! Auth::attempt($formData)) {
 
-            return Redirect::intended('statuses');
+            Flash::message('We were unable to sign you in.');
+            return Redirect::back()->withInput();
         }
+
+        Flash::message('Welcome back');
+
+        return Redirect::intended('statuses');
 
     }
 

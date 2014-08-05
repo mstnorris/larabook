@@ -1,18 +1,14 @@
-<?php namespace Larabook\Statuses;
+<?php  namespace Larabook\Statuses;
 
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
 
-/**
- * Class PublishStatusCommandHandler
- * @package Larabook\Statuses
- */
 class PublishStatusCommandHandler implements CommandHandler {
 
     use DispatchableTrait;
 
     /**
-     * @var
+     * @var $statusRepository
      */
     protected $statusRepository;
 
@@ -38,6 +34,6 @@ class PublishStatusCommandHandler implements CommandHandler {
 
         $this->dispatchEventsFor($status);
 
-        //return $status;
+        return $status;
     }
 }

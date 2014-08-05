@@ -13223,6 +13223,7 @@ namespace {
 		 * 
 		 *
 		 * @param $message
+		 * @param $title
 		 * @static 
 		 */
 		 public static function success($message){
@@ -13234,6 +13235,7 @@ namespace {
 		 * 
 		 *
 		 * @param $message
+		 * @param $title
 		 * @static 
 		 */
 		 public static function error($message){
@@ -13245,11 +13247,24 @@ namespace {
 		 * 
 		 *
 		 * @param $message
+		 * @param $title
 		 * @static 
 		 */
-		 public static function overlay($message){
+		 public static function warning($message){
 			//Method inherited from \Laracasts\Flash\FlashNotifier
-			 \Laracasts\Flash\FlashNotifier::overlay($message);
+			 \Laracasts\Flash\FlashNotifier::warning($message);
+		 }
+
+		/**
+		 * 
+		 *
+		 * @param $message
+		 * @param $title
+		 * @static 
+		 */
+		 public static function overlay($message, $title = 'Notice'){
+			//Method inherited from \Laracasts\Flash\FlashNotifier
+			 \Laracasts\Flash\FlashNotifier::overlay($message, $title);
 		 }
 
 		/**
@@ -13259,9 +13274,9 @@ namespace {
 		 * @param string $level
 		 * @static 
 		 */
-		 public static function message($message, $level = 'info'){
+		 public static function message($message, $level = 'info', $title = 'Notice'){
 			//Method inherited from \Laracasts\Flash\FlashNotifier
-			 \Laracasts\Flash\FlashNotifier::message($message, $level);
+			 \Laracasts\Flash\FlashNotifier::message($message, $level, $title);
 		 }
 
 	}
