@@ -1,6 +1,7 @@
 <?php
 
 use Larabook\Users\FollowUserCommand;
+use Larabook\Users\UnfollowUserCommand;
 
 /**
  * Class FollowsController
@@ -41,3 +42,8 @@ class FollowsController extends \BaseController {
 
 
 }
+
+
+
+
+

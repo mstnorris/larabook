@@ -1,7 +1,6 @@
 <?php namespace Larabook\Users;
 
 class UnfollowUserCommand {
-
     /**
      * @var string
      */

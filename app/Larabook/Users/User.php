@@ -1,46 +1,49 @@
 <?php namespace Larabook\Users;
 
+use Hash;
 use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
-use Eloquent, Hash;
 use Larabook\Registration\Events\UserRegistered;
+use Larabook\Users\FollowableTrait;
 use Laracasts\Commander\Events\EventGenerator;
 use Laracasts\Presenter\PresentableTrait;
 
-/**
- * Class User
- */
-class User extends Eloquent implements UserInterface, RemindableInterface {
+class User extends \Eloquent implements UserInterface, RemindableInterface {
 
-	use UserTrait, RemindableTrait, EventGenerator, PresentableTrait;
-
-    public $follows = [];
-
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
+    use UserTrait, RemindableTrait, EventGenerator, PresentableTrait, FollowableTrait;
 
     /**
-     * Path to the presenter for a user
+     * Which fields may be mass assigned?
+     *
+     * @var array
+     */
+    protected $fillable = ['username', 'email', 'password'];
+
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
+
+    /**
+     * Path to the presenter for a user.
      *
      * @var string
      */
     protected $presenter = 'Larabook\Users\UserPresenter';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = array('password', 'remember_token');
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = array('password', 'remember_token');
 
     /**
-     * Passwords must always be hashed
+     * Passwords must always be hashed.
      *
      * @param $password
      */
@@ -50,24 +53,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     }
 
     /**
-     * Which fields may be mass assigned
-     * @var array
+     * A user has many statuses.
+     *
+     * @return mixed
      */
-    protected $fillable = ['username','email','password'];
-
-    public function getRememberToken()
+    public function statuses()
     {
-        return $this->remember_token;
-    }
-
-    public function setRememberToken($value)
-    {
-        $this->remember_token = $value;
-    }
-
-    public function getRememberTokenName()
-    {
-        return 'remember_token';
+        return $this->hasMany('Larabook\Statuses\Status');
     }
 
     /**
@@ -76,9 +68,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      * @param $username
      * @param $email
      * @param $password
-     * @return static
+     * @return User
      */
-    public static function register($username, $email, $password) {
+    public static function register($username, $email, $password)
+    {
         $user = new static(compact('username', 'email', 'password'));
 
         $user->raise(new UserRegistered($user));
@@ -86,61 +79,20 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $user;
     }
 
-
     /**
-     * A user has many statuses
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function statuses()
-    {
-        return $this->hasMany('Larabook\Statuses\Status');
-    }
-
-
-    /**
-     * Determine if the given user is the same as
-     * the current one
+     * Determine if the given user is the same
+     * as the current one.
      *
      * @param $user
-     * @return mixed
+     * @return bool
      */
-    public function is($user)
+    public function is(User $user)
     {
         if (is_null($user)) return false;
+
         return $this->username == $user->username;
     }
 
-    /**
-     * Get the list of users that the current user follows
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function followedUsers()
-    {
-        // return $this->belongsToMany('Larabook\Users\User' ....
-        return $this->belongsToMany(self::class, 'follows', 'follower_id', 'followed_id')->withTimestamps();
-    }
 
-    /**
-     * Get this list of users who follows the current user
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function followers(){
-        return $this->belongsToMany(self::class, 'follows', 'followed_id', 'follower_id')->withTimestamps();
-    }
 
-    /**
-     * Determine if current user follows another user
-     *
-     * @param User $otherUser
-     * @return bool
-     */
-    public function isFollowedBy(User $otherUser)
-    {
-        $idsWhoOtherUserFollows = $otherUser->followedUsers()->lists('followed_id');
-
-        return in_array($this->id, $idsWhoOtherUserFollows);
-    }
 }

@@ -1,12 +1,13 @@
 <?php namespace Larabook\Users;
 
+use Larabook\Users\UserRepository;
 use Laracasts\Commander\CommandHandler;
 
-class UnfollowUserCommandHandler implements CommandHandler {
-
+class UnfollowUserCommandHandler implements CommandHandler
+{
     protected $userRepo;
 
-    function __construct($userRepo)
+    function __construct(UserRepository $userRepo)
     {
         $this->userRepo = $userRepo;
     }

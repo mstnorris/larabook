@@ -1,7 +1,7 @@
 <?php namespace Larabook\Users;
 
-class UserRepository {
-
+class UserRepository
+{
     /**
      * Persist a user
      *
@@ -14,10 +14,10 @@ class UserRepository {
     }
 
     /**
-     * Get a paginated list of all users
+     * Get a paginated list of all users.
      *
      * @param int $howMany
-     * @return \Illuminate\Pagination\Paginator
+     * @return mixed
      */
     public function getPaginated($howMany = 25)
     {
@@ -25,7 +25,7 @@ class UserRepository {
     }
 
     /**
-     * Fetch a user by their username
+     * Fetch a user by their username.
      *
      * @param $username
      * @return mixed
@@ -39,10 +39,10 @@ class UserRepository {
     }
 
     /**
-     * Find a user by their ID
+     * Find a user by their id.
      *
      * @param $id
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|static
+     * @return mixed
      */
     public function findById($id)
     {
@@ -50,7 +50,7 @@ class UserRepository {
     }
 
     /**
-     * Follow a Larabook member
+     * Follow a Larabook user.
      *
      * @param $userIdToFollow
      * @param User $user
@@ -62,14 +62,14 @@ class UserRepository {
     }
 
     /**
-     * Unfollow a Larabook member
+     * Unfollow a Larabook user.
      *
      * @param $userIdToUnfollow
      * @param User $user
-     * @return int
+     * @return mixed
      */
     public function unfollow($userIdToUnfollow, User $user)
     {
         return $user->followedUsers()->detach($userIdToUnfollow);
     }
-} 
+}
