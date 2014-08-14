@@ -13,7 +13,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active">{{ link_to_route('users_path', 'Browse Users') }}</li>
+                <li>{{ link_to_route('statuses_path', 'Statuses') }}</li>
+                <li>{{ link_to_route('users_path', 'Browse Users') }}</li>
             </ul>
 
 

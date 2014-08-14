@@ -3,11 +3,11 @@ $I = new FunctionalTester($scenario);
 $I->am('a Larabook member');
 $I->wantTo('list all users who have registered for Larabook');
 
-$I->haveAnAccount(['username' => 'Foo']);
-$I->haveAnAccount(['username' => 'Bar']);
+$I->haveAnAccount(['username' => 'aaUsername1']);
+$I->haveAnAccount(['username' => 'aaUsername2']);
 
 $I->amOnPage('/users');
-$I->see('Foo');
-$I->see('Bar');
+$I->see('aaUsername1');
+$I->see('aaUsername2');
 
 

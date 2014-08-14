@@ -1,21 +1,23 @@
-@if ($user->isFollowedBy($currentUser))
+@if($signedIn)
+    @if ($user->isFollowedBy($currentUser))
 
-    {{ Form::open(['method' => 'DELETE', 'route' => ['follow_path', $user->id]]) }}
+        {{ Form::open(['method' => 'DELETE', 'route' => ['follow_path', $user->id]]) }}
 
-        {{ Form::hidden('userIdToUnfollow', $user->id) }}
+            {{ Form::hidden('userIdToUnfollow', $user->id) }}
 
-        <button type="submit" class="btn btn-danger">Unfollow {{ $user->username }}</button>
+            <button type="submit" class="btn btn-danger">Unfollow {{ $user->username }}</button>
 
-    {{ Form::close() }}
+        {{ Form::close() }}
 
-@else
+    @else
 
-    {{ Form::open(['route' => 'follows_path']) }}
+        {{ Form::open(['route' => 'follows_path']) }}
 
-        {{ Form::hidden('userIdToFollow', $user->id) }}
+            {{ Form::hidden('userIdToFollow', $user->id) }}
 
-        <button type="submit" class="btn btn-primary">Follow {{ $user->username }}</button>
+            <button type="submit" class="btn btn-primary">Follow {{ $user->username }}</button>
 
-    {{ Form::close() }}
+        {{ Form::close() }}
 
+    @endif
 @endif

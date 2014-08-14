@@ -19,7 +19,7 @@ class UserRepository
      * @param int $howMany
      * @return mixed
      */
-    public function getPaginated($howMany = 25)
+    public function getPaginated($howMany = 20)
     {
         return User::orderBy('username', 'asc')->paginate($howMany);
     }
@@ -32,10 +32,7 @@ class UserRepository
      */
     public function findByUsername($username)
     {
-        return User::with(['statuses' => function($query)
-        {
-            $query->latest();
-        }])->whereUsername($username)->first();
+        return User::with('statuses')->whereUsername($username)->first();
     }
 
     /**

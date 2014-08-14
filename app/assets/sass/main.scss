@@ -64,3 +64,11 @@ body{
     margin: auto;
   }
 }
+
+.pager li:first-child {
+  float: left;
+}
+
+.pager li:last-child {
+  float: right;
+}
